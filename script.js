@@ -66,8 +66,8 @@ function addPagination (list){
    document.getElementsByTagName("BUTTON")[1].classList.add("active");
    
    ul.addEventListener("click",(e)=>{
-     if(e.target.tagName === "BUTTON" && e.target.className!=="searched"){
-      for(let i=0; i<=5; i++){
+     if(e.target.tagName === "BUTTON" && e.target.className!="searched"){
+      for(let i=0; i<=number; i++){
          document.getElementsByTagName("BUTTON")[i].classList.remove("active");
       }
        e.target.classList.add("active");
@@ -89,6 +89,15 @@ header.insertAdjacentHTML('beforeend',`<label for="search" class="student-search
 <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
 </label>`)
 
+// this part adds paragraph to the page 
+let pp = document.createElement("P");
+pp.textContent= "    there is no matches"; 
+pp.style.display="none";
+pp.style.position="absolute";
+pp.style.top="150px";
+pp.style.right="650px"; 
+pp.style.color="red"; 
+header.appendChild(pp);
 
 
 // Search functions 
@@ -106,8 +115,17 @@ inputs.addEventListener("keyup",(e)=>{
       }
    }
 
-   showPage(datanew,1)
    
+
+   showPage(datanew,1)
+  
+   if(datanew[0]===undefined){
+      pp.style.display="block"
+   }else{
+     
+      pp.style.display="none"; 
+   }
+
       
    let number = Math.ceil(datanew.length/9) ;
    let ul = document.querySelector('.link-list');
@@ -137,18 +155,17 @@ inputs.addEventListener("keyup",(e)=>{
          showPage(datanew,e.target.textContent);
 
       }
+    
       
-      if( inputs.value===""){
-         ul.innerHTML=" "
-         document.querySelector('.student-list')="";
-         console.log("siema")
-         
-      }
-
-
+ 
    })
 
-
+   if( inputs.value===""){
+      ul.innerHTML=""
+      document.querySelector('.student-list').innerHTML="";
+      showPage(data,1);
+      addPagination(data);
+   }
 
 
 
